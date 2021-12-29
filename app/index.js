@@ -25,7 +25,8 @@ async function existingContract() {
     // get the contract details from the blockchain (read-only so no need to sign)
     const arbiter = await contract.arbiter();
     const beneficiary = await contract.beneficiary();
-    const value = await provider.getBalance(address);
+    const valueWei = await provider.getBalance(address);
+    const value = ethers.utils.formatEther(valueWei);
     if (value <= 0) {
       throw new Error('Contract is empty! Already been approved or cancelled');
     }
