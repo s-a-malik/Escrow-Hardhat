@@ -28,7 +28,8 @@ You can learn more about Parcel [here](https://parceljs.org/).
 
 From the initial repo clone, I have added the following features:
 
-- Works on Rinkeby testnet (see deployed contract @ ...)
+- Works on Rinkeby testnet (see example deployed contract @ ...)
+- added revert functionality to the contract to return funds to depositor if arbiter wants to.
 - Can check the approval status of any deployed contract given the address (solves the persistancy issue)
 - Converted wei to ETH for more user friendly experience.
 - Added useful messages giving the address of the contract in the UI when deployed. Also gives error message for trying to approve without the correct arbiter.

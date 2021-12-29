@@ -17,28 +17,48 @@ import {ethers} from 'ethers';
 const provider = new ethers.providers.Web3Provider(ethereum);
 
 export default async function addContract(id, contract, arbiter, beneficiary, value) {
-  const buttonId = `approve-${id}`;
+  const ApproveButtonId = `approve-${id}`;
+  const CancelButtonId = `cancel-${id}`;
 
   const container = document.getElementById("container");
   // add to the existing contract section
-  container.innerHTML += createHTML(buttonId, arbiter, beneficiary, value);
+  container.innerHTML += createHTML(ApproveButtonId, CancelButtonId, contract.address, arbiter, beneficiary, value);
 
   // this waits for the event.
   contract.on('Approved', () => {
-    document.getElementById(buttonId).className = "complete";
-    document.getElementById(buttonId).innerText = "✓ It's been approved!";
+    document.getElementById(ApproveButtonId).className = "complete";
+    document.getElementById(ApproveButtonId).innerText = "✓ It's been approved!";
+    document.getElementById(CancelButtonId).className = "complete";
+    document.getElementById(CancelButtonId).innerText = "";
   });
 
-  document.getElementById(buttonId).addEventListener("click", async () => {
+  contract.on('Cancelled', () => {
+    document.getElementById(CancelButtonId).className = "cancelled";
+    document.getElementById(CancelButtonId).innerText = "It's been cancelled!";
+    document.getElementById(ApproveButtonId).className = "complete";
+    document.getElementById(ApproveButtonId).innerText = "";
+  });
+
+  document.getElementById(ApproveButtonId).addEventListener("click", async () => {
     const signer = provider.getSigner();
     await contract.connect(signer).approve();
   });
+
+  document.getElementById(CancelButtonId).addEventListener("click", async () => {
+    const signer = provider.getSigner();
+    await contract.connect(signer).cancel();
+  });
+
 }
 
-function createHTML(buttonId, arbiter, beneficiary, value) {
+function createHTML(ApproveButtonId, CancelButtonId, address, arbiter, beneficiary, value) {
   return `
     <div class="existing-contract">
       <ul className="fields">
+        <li>
+          <div> Contract Address </div>
+          <div> ${address} </div>
+        </li>  
         <li>
           <div> Arbiter </div>
           <div> ${arbiter} </div>
@@ -51,8 +71,12 @@ function createHTML(buttonId, arbiter, beneficiary, value) {
           <div> Value (in ETH) </div>
           <div> ${value} </div>
         </li>
-        <div class="button" id="${buttonId}">
+        <div> To Approve or Cancel you must be the Arbiter! </div>
+        <div class="button" id="${ApproveButtonId}">
           Approve
+        </div>
+        <div class="button" id="${CancelButtonId}">
+          Cancel
         </div>
       </ul>
     </div>
