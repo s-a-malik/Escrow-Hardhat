@@ -23,3 +23,12 @@ Compile the contracts using `npx hardhat compile`. The artifacts will be placed 
 To run the front-end application move into the `app` folder and run `npx parcel index.html`.
 
 You can learn more about Parcel [here](https://parceljs.org/).
+
+## Extensions to the initial Fork from Chainshot Bootcamp
+
+From the initial repo clone, I have added the following features:
+
+- Works on Rinkeby testnet (see deployed contract @ ...)
+- Can check the approval status of any deployed contract given the address (solves the persistancy issue)
+- Converted wei to ETH for more user friendly experience.
+- Added useful messages giving the address of the contract in the UI when deployed. Also gives error message for trying to approve without the correct arbiter.

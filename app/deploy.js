@@ -1,6 +1,8 @@
 import Escrow from './artifacts/contracts/Escrow.sol/Escrow';
 import {ethers} from 'ethers';
+// require('dotenv').config();
 
+// does this work on all networks? Metamask yes!
 const provider = new ethers.providers.Web3Provider(ethereum);
 
 export default async function deploy(arbiter, beneficiary, value) {
