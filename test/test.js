@@ -43,4 +43,26 @@ describe("Escrow", function() {
         assert.equal(after.sub(before).toString(), deposit.toString());
     });
   });
+
+  describe("after cancelling from address other than the arbiter", () => {
+    it("should revert", async () => {
+        let ex;
+        try {
+            await contract.connect(beneficiary).cancel();
+        }
+        catch (_ex) {
+            ex = _ex;
+        }
+        assert(ex, "Attempted to cancel the Escrow from the beneficiary address. Expected transaction to revert!");
+    });
+  });
+
+  describe("after cancelling from the arbiter", () => {
+    it("should transfer balance back to depositor", async () => {
+        const before = await ethers.provider.getBalance(depositor.getAddress());
+        const approve = await contract.connect(arbiter).cancel();
+        const after = await ethers.provider.getBalance(depositor.getAddress());
+        assert.equal(after.sub(before).toString(), deposit.toString());
+    });
+  });
 });
