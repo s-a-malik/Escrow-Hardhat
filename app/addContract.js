@@ -40,13 +40,30 @@ export default async function addContract(id, contract, arbiter, beneficiary, va
   });
 
   document.getElementById(ApproveButtonId).addEventListener("click", async () => {
-    const signer = provider.getSigner();
-    await contract.connect(signer).approve();
+    // catch reverts so we can show the user the error
+    let ex;
+    try {
+      const signer = provider.getSigner();
+      
+      await contract.connect(signer).approve();
+    }
+    catch (_ex) {
+        ex = _ex;
+    }
+    alert(`${ex}. Check you are the arbiter and try again.`);
   });
 
   document.getElementById(CancelButtonId).addEventListener("click", async () => {
-    const signer = provider.getSigner();
-    await contract.connect(signer).cancel();
+    let ex;
+    try {
+      const signer = provider.getSigner();
+      
+      await contract.connect(signer).cancel();
+    }
+    catch (_ex) {
+        ex = _ex;
+    }
+    alert(`${ex}. Check you are the arbiter and try again.`);
   });
 
 }

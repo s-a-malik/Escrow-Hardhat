@@ -26,7 +26,7 @@ contract Escrow {
 		isApproved = true;
 	}
 
-	function cancel() external payable {
+	function cancel() external {
 		// security: only the arbiter can cancel the contract
 		require(msg.sender == arbiter);
 		// cancel the contract and return funds to the depositor

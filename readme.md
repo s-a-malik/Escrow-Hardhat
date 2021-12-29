@@ -28,7 +28,7 @@ You can learn more about Parcel [here](https://parceljs.org/).
 
 From the initial repo clone, I have added the following features:
 
-- Works on Rinkeby testnet (see example deployed contract @ ...)
+- Works on Rinkeby testnet (see example deployed contract @ ...) Verified contract. 
 - added revert functionality to the contract to return funds to depositor if arbiter wants to (with hardhat tests).
 - Can pull the status of any deployed contract given the address (solves the persistancy issue).
 - Converted wei to ETH for more user friendly experience.
