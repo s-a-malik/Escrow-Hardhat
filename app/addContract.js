@@ -56,22 +56,24 @@ function createHTML(ApproveButtonId, CancelButtonId, address, arbiter, beneficia
     <div class="existing-contract">
       <ul className="fields">
         <li>
-          <div> Contract Address </div>
+          <div> Contract: </div>
           <div> ${address} </div>
         </li>  
         <li>
-          <div> Arbiter </div>
+          <div> Arbiter: </div>
           <div> ${arbiter} </div>
         </li>
         <li>
-          <div> Beneficiary </div>
+          <div> Beneficiary: </div>
           <div> ${beneficiary} </div>
         </li>
         <li>
-          <div> Value (in ETH) </div>
+          <div> Value (in ETH): </div>
           <div> ${value} </div>
         </li>
-        <div> To Approve or Cancel you must be the Arbiter! </div>
+        <li>
+          <div> To Approve or Cancel you must be the Arbiter!  </div>
+        </li>
         <div class="button" id="${ApproveButtonId}">
           Approve
         </div>

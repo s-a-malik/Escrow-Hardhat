@@ -18,24 +18,25 @@ async function newContract() {
 }
 
 async function existingContract() {
-  // read the address given by the user
-  const address = document.getElementById("address").value;
-  const contract = new ethers.Contract(address, Escrow.abi, provider);
-  // get the contract details from the blockchain (read-only so no need to sign)
   try {
+    // read the address given by the user
+    const address = document.getElementById("address").value;
+    const contract = new ethers.Contract(address, Escrow.abi, provider);
+    // get the contract details from the blockchain (read-only so no need to sign)
     const arbiter = await contract.arbiter();
     const beneficiary = await contract.beneficiary();
-    const balance = await provider.getBalance(address);
-    const value = await contract.value();
-    addContract(++contracts, contract, arbiter, beneficiary, value);
+    const value = await provider.getBalance(address);
+    if (value <= 0) {
+      throw new Error('Contract is empty! Already been approved or cancelled');
+    }
+    else {
+      addContract(++contracts, contract, arbiter, beneficiary, value);
+    }
   }
   // if the address isn't a valid contract in this framing, this will throw an error
   catch (error) {
-    // TODO do something better?
-    console.error(error);
+    alert(`${error}. Check the contract address and try again.`);
   }
-
-
 }
 
 document.getElementById("deploy").addEventListener("click", newContract);
