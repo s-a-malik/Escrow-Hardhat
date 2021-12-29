@@ -41,29 +41,24 @@ export default async function addContract(id, contract, arbiter, beneficiary, va
 
   document.getElementById(ApproveButtonId).addEventListener("click", async () => {
     // catch reverts so we can show the user the error
-    let ex;
     try {
       const signer = provider.getSigner();
-      
       await contract.connect(signer).approve();
     }
-    catch (_ex) {
-        ex = _ex;
+    catch (ex) {
+      // TODO can use the error message to show the user
+      alert(`Cannot execute transaction. Check you are the arbiter and try again.`);
     }
-    alert(`${ex}. Check you are the arbiter and try again.`);
   });
 
   document.getElementById(CancelButtonId).addEventListener("click", async () => {
-    let ex;
     try {
       const signer = provider.getSigner();
-      
       await contract.connect(signer).cancel();
     }
-    catch (_ex) {
-        ex = _ex;
+    catch (ex) {
+      alert(`Cannot execute transaction. Check you are the arbiter and try again.`);
     }
-    alert(`${ex}. Check you are the arbiter and try again.`);
   });
 
 }
